@@ -1,0 +1,67 @@
+def reverse_string(s):
+    stack = list(s)
+    rev = ""
+    while stack:
+        rev += stack.pop()
+    return rev
+
+
+def is_balanced(expr):
+    stack = []
+    pairs = {')': '(', '}': '{', ']': '['}
+
+    for ch in expr:
+        if ch in "({[":
+            stack.append(ch)
+        elif ch in ")}]":
+            if not stack or stack[-1] != pairs[ch]:
+                return False
+            stack.pop()
+    return len(stack) == 0
+
+
+def undo_operations(text):
+    stack = []
+    for ch in text:
+        if ch == "#": 
+            if stack:
+                stack.pop()
+        else:
+            stack.append(ch)
+    return "".join(stack)
+
+
+def main():
+    while True:
+        print("\n=== Stack Applications Menu ===")
+        print("1. Reverse a String")
+        print("2. Check Balanced Parentheses")
+        print("3. Undo Operations (use # as undo)")
+        print("4. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            s = input("Enter string: ")
+            print("Reversed string:", reverse_string(s))
+
+        elif choice == "2":
+            expr = input("Enter expression: ")
+            if is_balanced(expr):
+                print("Expression is Balanced")
+            else:
+                print("Expression is Not Balanced")
+
+        elif choice == "3":
+            text = input("Enter text (use # for undo): ")
+            print("Final text after undo:", undo_operations(text))
+
+        elif choice == "4":
+            print("Exiting program...")
+            break
+
+        else:
+            print("Invalid choice! Try again.")
+
+
+if __name__ == "__main__":
+    main()
